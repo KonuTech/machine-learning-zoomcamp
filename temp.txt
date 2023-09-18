@@ -1,3 +1,6 @@
 source venv/Scripts/activate
 pipenv shell
 pipenv lock
+
+ls -lah
+jupyter notebook
