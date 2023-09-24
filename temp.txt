@@ -1,8 +1,10 @@
 source venv/Scripts/activate
 pipenv shell
+pipenv install --dev seaborn
 # pipenv lock
 
 ls -lah
+pip install notebook
 jupyter notebook
 
 git remote add upstream https://github.com/DataTalksClub/machine-learning-zoomcamp 
