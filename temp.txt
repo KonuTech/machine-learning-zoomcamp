@@ -4,8 +4,8 @@ pipenv install --dev seaborn
 # pipenv lock
 
 ls -lah
-pip install notebook
-jupyter notebook
+# pip install notebook
+# jupyter notebook
 
 git remote add upstream https://github.com/DataTalksClub/machine-learning-zoomcamp 
 git remote -v
@@ -13,5 +13,8 @@ git fetch upstream
 git checkout master
 git merge upstream/master
 git push origin master
+git commit -m "updated from upstream repo"
 git status
 git add .
+
+
