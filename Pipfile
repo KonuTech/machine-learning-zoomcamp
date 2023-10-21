@@ -11,6 +11,7 @@ notebook = "*"
 seaborn = "*"
 flask = "*"
 waitress = "*"
+xgboost = "*"
 
 [requires]
 python_version = "3.9"
