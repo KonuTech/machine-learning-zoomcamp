@@ -13,8 +13,8 @@ git remote -v
 git fetch upstream
 git checkout master
 git merge upstream/master
-git push origin master
 git commit -m "updated from upstream repo"
+git push origin master
 git status
 git add .
 
