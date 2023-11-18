@@ -1,4 +1,5 @@
 *.h5
+*.zip
 .ipynb_checkpoints/
 __pycache__/
 /chapter-07-neural-nets/clothing-dataset-small/
