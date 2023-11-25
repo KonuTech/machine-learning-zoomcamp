@@ -4,7 +4,9 @@ __pycache__/
 **my_dir/
 **logs/
 **models/
+**venv/
 
 # file types
 *.h5
 *.tflite
+08-deep-learning/clothing-dataset-small-master.zip
