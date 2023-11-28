@@ -12,7 +12,9 @@ seaborn = "*"
 flask = "*"
 waitress = "*"
 xgboost = "*"
-tensorflow = "<2.11"
+tensorflow = "==2.7.0"
+pip = "*"
+install = "*"
 
 [requires]
 python_version = "3.9"

@@ -47,3 +47,32 @@ python predict-test.py
 # docker build -t zoomcamp-test .
 # docker run -it --rm -p 9696:9696 --entrypoint=bash zoomcamp-test
 # docker run -it --rm -p 9696:9696 --entrypoint=bash svizor/zoomcamp-model:3.10.12-slim
+
+
+# 1. From the local terminal:
+docker build -t clothing-model .
+
+# 2. From the local terminal:
+docker run -it --rm -p 8080:8080 clothing-model:latest
+
+# 3. Run an app in a Docker image: 
+python predict.py
+
+# 4. Run a prediction from the local terminal:
+python predict-test.py
+
+# docker run -it --rm --entrypoint=bash zoomcamp-test
+# docker build -t zoomcamp-test .
+# docker run -it --rm -p 9696:9696 --entrypoint=bash zoomcamp-test
+# docker run -it --rm -p 9696:9696 --entrypoint=bash svizor/zoomcamp-model:3.10.12-slim
+
+# HOMEWORK
+# docker pull agrigorev/zoomcamp-bees-wasps:v2
+# docker images
+# docker build -t zoomcamp-serverless-homework .
+# docker run -it --rm -p 8080:8080 --entrypoint=bash zoomcamp-serverless-homework
+
+# in a Docker shell:
+# python
+# import homework
+# homework.predict(url="https://habrastorage.org/webt/rt/d9/dh/rtd9dhsmhwrdezeldzoqgijdg8a.jpeg")
