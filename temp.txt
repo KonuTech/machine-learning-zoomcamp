@@ -76,3 +76,119 @@ python predict-test.py
 # python
 # import homework
 # homework.predict(url="https://habrastorage.org/webt/rt/d9/dh/rtd9dhsmhwrdezeldzoqgijdg8a.jpeg")
+
+
+# 10.3 
+docker run -it --rm \
+    -p 8500:8500 \
+    -v "C:\Users\KonuTech\ml-zoomcamp\machine-learning-zoomcamp\10-kubernetes\code\clothing-model:/models/clothing-model/1" \
+    -e MODEL_NAME="clothing-model" \
+    tensorflow/serving:2.7.0
+
+
+# 10.4
+docker build -t zoomcamp-10-model:xception-v4-001 \
+    -f image-model.dockerfile .
+
+docker run -it --rm \
+    -p 8500:8500 \
+    zoomcamp-10-model:xception-v4-001
+
+
+docker build -t zoomcamp-10-gateway:002 \
+    -f image-gateway.dockerfile .
+
+docker run -it --rm \
+    -p 9696:9696 \
+    zoomcamp-10-gateway:002
+
+
+docker-compose up
+
+
+# 10.5
+docker build -t ping:v001 .
+
+docker run -it --rm \
+    -p 9696:9696 \
+    ping:v001
+
+curl localhost:9696/ping
+
+
+# 10.6
+curl.exe -Lo kind-windows-amd64.exe https://kind.sigs.k8s.io/dl/v0.20.0/kind-windows-amd64
+Move-Item .\kind-windows-amd64.exe c:\kind\kind.exe
+
+
+PS C:\kind> .\kind.exe create cluster
+Creating cluster "kind" ...
+ • Ensuring node image (kindest/node:v1.27.3) 🖼  ...
+ ✓ Ensuring node image (kindest/node:v1.27.3) 🖼
+ • Preparing nodes 📦   ...
+ ✓ Preparing nodes 📦
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Thanks for using kind! 😊
+
+
+PS C:\kind> kubectl cluster-info --context kind-kind
+Kubernetes control plane is running at https://127.0.0.1:59542
+CoreDNS is running at https://127.0.0.1:59542/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+PS C:\kind> kubectl get service
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3m18s
+
+
+PS C:\kind> docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                       NAMES
+a870482b9e7c   kindest/node:v1.27.3   "/usr/local/bin/entr…"   4 minutes ago    Up 4 minutes    127.0.0.1:59542->6443/tcp   kind-control-plane
+6f3d351cc433   ping:v001              "gunicorn --bind=0.0…"   22 minutes ago   Up 22 minutes   0.0.0.0:9696->9696/tcp      affectionate_morse
+
+
+kubectl apply -f deployment.yaml
+kubectl get deployment
+kubectl get pod
+kubectl describe pod ping-deployment-86b45d75bf-w8p2n
+
+
+kind load docker-image ping:v001
+
+PS C:\kind> .\kind.exe load docker-image ping:v001
+Image: "ping:v001" with ID "sha256:5478aa7e0f423be585aed3f27fb6d858853fea0a37c623529b84bf8a120f8a8f" not yet present on node "kind-control-plane", loading...
+
+
+$ kubectl port-forward ping-deployment-86b45d75bf-w8p2n 9696:9696
+Forwarding from 127.0.0.1:9696 -> 9696
+curl localhost:9696/ping
+
+
+kubectl apply -f service.yaml
+kubectl get service
+
+
+$ kubectl port-forward service/ping 8080:80
+Forwarding from 127.0.0.1:8080 -> 9696
+Forwarding from [::1]:8080 -> 9696
+curl localhost:8080/ping
+
+
+
+# 10.7
+kubectl apply -f model-deployment.yaml
+kubectl get pod
+kubectl describe pod tf-serving-clothing-model-76b6cbf857-62c6n
