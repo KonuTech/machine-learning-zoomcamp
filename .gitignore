@@ -10,3 +10,4 @@ __pycache__/
 *.h5
 *.tflite
 08-deep-learning/clothing-dataset-small-master.zip
+10-kubernetes/code/clothing-model/variables/variables.data-00000-of-00001
