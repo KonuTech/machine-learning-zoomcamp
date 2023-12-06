@@ -189,6 +189,164 @@ curl localhost:8080/ping
 
 
 # 10.7
+# PS C:\kind> .\kind.exe load docker-image ping:v001
+
+
+kubectl get pod
+kubectl get deployment
+kubectl delete -f model-deployment.yaml
+
+PS C:\kind> ls
+
+
+    Directory: C:\kind
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        03.12.2023     18:54        6561792 kind.exe
+
+
+PS C:\kind> .\kind.exe load docker-image zoomcamp-10-model:xception-v4-001
+Image: "zoomcamp-10-model:xception-v4-001" with ID "sha256:3d969d6719346c9147e04a15ba2c419e4ee13165ead9f3a53f08e652903c798f" not yet present on node "kind-control-plane", loading...
+PS C:\kind>
+
 kubectl apply -f model-deployment.yaml
 kubectl get pod
-kubectl describe pod tf-serving-clothing-model-76b6cbf857-62c6n
+kubectl describe pod tf-serving-clothing-model-85b5dbddc5-d265c
+kubectl port-forward tf-serving-clothing-model-85b5dbddc5-d265c 8500:8500
+
+
+kubectl apply -f model-service.yaml
+
+
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code (master)
+$ kubectl get service
+NAME                        TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubernetes                  ClusterIP      10.96.0.1      <none>        443/TCP        2d8h
+ping                        LoadBalancer   10.96.57.251   <pending>     80:31744/TCP   2d7h
+tf-serving-clothing-model   ClusterIP      10.96.23.42    <none>        8500/TCP       5h57m
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code (master)
+$ docker ps
+CONTAINER ID   IMAGE                               COMMAND                  CREATED         STATUS         PORTS        
+               NAMES
+510ea2d77dc3   zoomcamp-10-gateway:002             "gunicorn --bind=0.0…"   2 minutes ago   Up 2 minutes   0.0.0.0:9696->9696/tcp      code-gateway-1
+4680b4879a05   zoomcamp-10-model:xception-v4-001   "/usr/bin/tf_serving…"   2 minutes ago   Up 2 minutes   8500-8501/tcp               NAMES               code-clothing-model-1                                                                                    >9696/tcp      code-gateway-1   
+a870482b9e7c   kindest/node:v1.27.3                "/usr/local/bin/entr…"   2 days ago      Up 6 hours     127.0.0.1:595               code-clothing-mod42->6443/tcp   kind-control-plane
+                                                                                                                        42->6443/tcp   kind-control-plan
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code (master)
+$ ls
+clothing-model     docker-compose.yaml  image-gateway.dockerfile  kube-config  ping     Pipfile.lock  proto.py   test.py
+
+clothing-model.h5  gateway.py           image-model.dockerfile    pants.jpg    Pipfile  plan.md       README.md  tf-serving-connect.ipynb                                                                                                       ing-connect.ipynb
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code (master)
+$ cd kube-config/
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ ls
+eks-config.yaml  gateway-deployment.yaml  gateway-service.yaml  model-deployment.yaml  model-service.yaml
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl get pod
+NAME                                         READY   STATUS             RESTARTS   AGE
+tf-serving-clothing-model-76b6cbf857-gprjj   0/1     ImagePullBackOff   0          27m
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl delete -f tf-serving-clothing-model-76b6cbf857-gprjj
+error: the path "tf-serving-clothing-model-76b6cbf857-gprjj" does not exist
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl delete tf-serving-clothing-model-76b6cbf857-gprjj
+error: the server doesn't have a resource type "tf-serving-clothing-model-76b6cbf857-gprjj"
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl get pod
+NAME                                         READY   STATUS             RESTARTS   AGE
+tf-serving-clothing-model-76b6cbf857-gprjj   0/1     ImagePullBackOff   0          29m
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl delete -f model-deployment.yaml~
+error: the path "model-deployment.yaml~" does not exist
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl get pod
+NAME                                         READY   STATUS             RESTARTS   AGE
+tf-serving-clothing-model-76b6cbf857-gprjj   0/1     ImagePullBackOff   0          29m
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl delete -f model-deployment.yaml
+deployment.apps "tf-serving-clothing-model" deleted
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl get pod
+No resources found in default namespace.
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl apply -f model-deployment.yaml
+deployment.apps/tf-serving-clothing-model created
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl get pod
+NAME                                         READY   STATUS         RESTARTS   AGE
+tf-serving-clothing-model-76b6cbf857-x7gqh   0/1     ErrImagePull   0          3s
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl delete -f model-deployment.yaml
+deployment.apps "tf-serving-clothing-model" deleted
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl get pod
+No resources found in default namespace.
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl apply -f model-deployment.yaml
+deployment.apps/tf-serving-clothing-model created
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl get pod
+NAME                                         READY   STATUS    RESTARTS   AGE
+tf-serving-clothing-model-55d9b7586b-b9pnb   1/1     Running   0          3s
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)        
+$ kubectl get pod
+NAME                                         READY   STATUS    RESTARTS   AGE
+tf-serving-clothing-model-55d9b7586b-b9pnb   1/1     Running   0          52s
+
+KonuTech@DESKTOP-D7SFLUT MINGW64 ~/ml-zoomcamp/machine-learning-zoomcamp/10-kubernetes/code/kube-config (master)
+$
+
+
+
+python gateway.py
+
+$ kubectl apply -f model-service.yaml
+service/tf-serving-clothing-model unchange
+kubectl get service
+
+
+kubectl port-forward service/tf-serving-clothing-model 8500:8500
+
+$ kubectl exec -it tf-serving-clothing-model-55d9b7586b-b9pnb -- bash
+
+
+curl tf-serving-clothing-model.default.svc.cluster.local:8500
+
+
+PS C:\kind> .\kind.exe load docker-image zoomcamp-10-gateway:002
+Image: "zoomcamp-10-gateway:002" with ID "sha256:38143afc02819d8d563b9da11d2aa801c45792aeb7591c5dd59f52a0eb28464f" not yet present on node "kind-control-plane", loading...
+PS C:\kind>
+
+kubectl apply -f gateway-deployment.yaml
+
+kubectl port-forward gateway-7d74767d4b-g6jvt 9696:9696
+
+kubectl apply -f gateway-service.yaml
+
+kubectl get service
+kubectl port-forward service/gateway 8080:80
